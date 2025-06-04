@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package usermanagement;
+
+service UserService {
+  // Create a new user
+  rpc CreateUser (CreateUserRequest) returns (UserResponse);
+
+  // Get a user by ID
+  rpc GetUser (GetUserRequest) returns (UserResponse);
+
+  // Update an existing user
+  rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+
+  // Delete a user by ID
+  rpc DeleteUser (DeleteUserRequest) returns (Empty);
+
+  // List all users
+  rpc ListUsers (Empty) returns (ListUsersResponse);
+
+  // Login user
+  rpc Login (LoginRequest) returns (LoginResponse);
+}
+
+// User definition
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string passwordHash = 4;
+  string role = 5;
+}
+
+// Request and response messages
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+  string passwordHash = 3;
+  string role = 4;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string passwordHash = 4;
+  string role = 5;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  User user = 1;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string passwordHash = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+message Empty {}
